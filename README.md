@@ -1,10 +1,21 @@
-# nextjs nextauth pocketbase
+<div align="center">
+  <h1 align="center">nextjs nextauth pocketbase</h1>
+</div>
+<div align="center">
+  <a href="https://nextjs-nextauth-pocketbase.vercel.app/">nextjs-nextauth-pocketbase.vercel.app</a>
+</div>
+<br/>
+This repository is a proof of concept how to integrate the tech stack nextjs, nextauth (frontend) and pocketbase (backend).
 
-This repository is a proof of concept how to integrate the tech stack nextjs, nextauth (frontend) and pocketbase (backend). The backend pocketbase should be repsonible to authenticate the user via OAuth providers and / or credentials.
+The backend pocketbase should be repsonible to authenticate the user via OAuth providers and / or credentials.
 
 Pocketbase return the user's authentication token.
 
 The user's token authenticates all request to pocketbase.
+
+## Demo
+
+(https://nextjs-nextauth-pocketbase.vercel.app/)[https://nextjs-nextauth-pocketbase.vercel.app/]
 
 ## Support
 
@@ -21,6 +32,9 @@ Please submit issues and / or PRs to improve this project. Thanks!
 
 - [ ] Update README withe more detailed instructions
 - [ ] Add inline comments
+- [ ] Delete authprovider cookie after signin process
+- [ ] Add credentials signin
+- [ ] Add signup process
 - [ ] Redirect after signin to the previous page
 - [ ] Singleton pocketbase for authenticated user (is it possible for ssr and client?)
 
