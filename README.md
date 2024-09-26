@@ -1,36 +1,159 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# nextjs nextauth pocketbase
+
+This repository is a proof of concept how to integrate the tech stack nextjs, nextauth (frontend) and pocketbase (backend). The backend pocketbase should be repsonible to authenticate the user via OAuth providers and / or credentials.
+
+Pocketbase return the user's authentication token.
+
+The user's token authenticates all request to pocketbase.
+
+## Support
+
+Please submit issues and / or PRs to improve this project. Thanks!
+
+## Techstack
+
+- [Nextjs](https://nextjs.org/)
+- [NextAuth.js](https://next-auth.js.org/)
+- [Pocketbase](https://pocketbase.io/)
+- Design from [papermark](https://github.com/mfts/papermark?tab=readme-ov-file)
+
+## TODOS
+
+- [ ] Update README withe more detailed instructions
+- [ ] Add inline comments
+- [ ] Redirect after signin to the previous page
+- [ ] Singleton pocketbase for authenticated user (is it possible for ssr and client?)
 
 ## Getting Started
 
-First, run the development server:
+### Pocketbase + OAuth provider
+
+1. Download and start pocketbase
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# download and start pocketbase
+pocketbase serve
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Open UI and configure OAuth provider with clientID and clientSecret
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Open http://localhost:8090/_/#/settings/auth-providers
+# Configure OAuth provider with clientID and clientSecret
+````
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Configure the redirect uri at your oauth provider
 
-## Learn More
+The oauth provider redirects to this url which is an api route from nextauth
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# the oauth provider's callback: http://localhost:3000/api/auth/callback/pocketbase
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### nextjs
 
-## Deploy on Vercel
+1. Create nextjs project, add nextauth, start pocketbase, configure OAuth provider(s) in pocketbase
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# https://nextjs.org/docs/getting-started/installation
+npx create-next-app@latest [project-name] [options]
+# enter project path
+cd [project-name]
+# install nextauth: https://next-auth.js.org/getting-started/example
+npm install next-auth --save
+# install pocketbase javascript client
+npm install pocketbase --save
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Add environment parameters with typescript support for nextjs
+
+The environment parameters are used in the NexAuth OAuth configuration to request the authentication process at pocketbase.
+
+```bash
+# in the [project-name] root path
+touch env.d.ts
+```
+
+File: env.d.ts
+```typescript
+namespace NodeJS {
+  interface ProcessEnv {
+    POCKETBASE_URL: string; // the pocketbase base url "http://127.0.0.1:8090" (server side)
+    NEXT_PUBLIC_POCKETBASE_URL: string; // the pocketbase base url "http://127.0.0.1:8090" (client side)
+    POCKETBASE_COOKIE_NAME: string; // the cookie name to save the clicked authprovider at the nextjs signin page (/app/auth/signin/page.tsx)
+  }
+}
+````
+
+Include the file `env.d.ts`in the file `tsconfig.json`:
+```json
+...
+"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "env.d.ts"],
+...
+```
+
+3. Create the file `.env` and add the envirionment parameters
+
+```bash
+touch .env
+````
+
+File: .env
+```env
+POCKETBASE_COOKIE_NAME="authprovider"
+POCKETBASE_URL=http://127.0.0.1:8090
+NEXT_PUBLIC_POCKETBASE_URL=http://127.0.0.1:8090
+
+NEXTAUTH_SECRET=my_ultra_secure_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
+NEXT_PUBLIC_NEXTAUTH_URL=http://localhost:3000
+```
+
+4. Create a helper for pocketbase server side
+
+```bash
+mkdir lib
+touch lib/pocketbasessr.ts
+````
+
+5. Create the nextauth api route which handles the callback from the oauth provider
+
+```bash
+mkdir -p "app/api/[...nextauth]"
+touch "app/api/[...nextauth]/route.ts"
+```
+
+5. Create the signin page
+
+```bash
+mkdir -p "app/auth/signin"
+touch app/auth/signin/page.tsx
+```
+
+6. Create the component AuthLink to render signin buttons for each oauth provider
+
+Renders the authentication method (oauth provider) from pocketbase as a client component. If the user clicks on a button, a serer side action is called to create a cookie to store the authentication information (code, name)
+
+```bash
+mkdir -p "components/auth"
+touch components/auth/AuthLink.tsx"
+```
+
+6. Create the server side action to save a cookie
+
+Saves a cookie with the given authentication provider by clicking the signin button in (4)
+
+```bash
+touch app/action.ts
+````
+
+7. Add the next authentication options with a custom oauth provider (pocketbase)
+
+The nextauth configuration is a custom oauth provider for pocketbase.
+
+```bash
+touch lib/authoptions.ts
+```
+
+8. ... missing instructions -- to be added...
