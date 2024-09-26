@@ -111,7 +111,7 @@ export const MobileSidebarComponent = ({
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-row space-x-2 w-full">
+    <div className={cn("flex flex-row space-x-2 w-full", className)}>
       {Object.entries(NAVIGATION_ITEMS).map(([key, item]) => {
         const isCurrent =
           key === "/"
