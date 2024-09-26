@@ -13,10 +13,6 @@ Pocketbase return the user's authentication token.
 
 The user's token authenticates all request to pocketbase.
 
-## Demo
-
-(https://nextjs-nextauth-pocketbase.vercel.app/)[https://nextjs-nextauth-pocketbase.vercel.app/]
-
 ## Support
 
 Please submit issues and / or PRs to improve this project. Thanks!
