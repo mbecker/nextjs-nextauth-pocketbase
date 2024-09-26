@@ -44,6 +44,13 @@ export default async function SigninPage({
             <AuthLink key={a.name} redirectURI={redirectURI} authProvider={a} />
           ))}
         </div>
+        {authMethods.length === 0 && (
+          <div className="flex gap-4 items-center flex-col sm:flex-row">
+            <span className="text-pink-400">
+              No configured authentication providers
+            </span>
+          </div>
+        )}
         {errorMessage && (
           <div className="flex gap-4 items-center flex-col sm:flex-row">
             <span className="text-pink-400">{errorMessage}</span>
