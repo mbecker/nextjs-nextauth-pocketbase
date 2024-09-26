@@ -8,22 +8,23 @@ import { useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import { SignoutButton, SigninPageButton } from "./auth/SignoutButton";
 import { NAVIGATION_ITEMS } from "@/data/navigation";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./ui/sheet";
 import { MenuIcon } from "lucide-react";
+import Link from "next/link";
 
 export default function Sidebar() {
   const { data: session } = useSession();
   return (
     <>
       <nav>
-        {/* sidebar for desktop */}
-        <SidebarComponent className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex" />
-
-        {/* move main screen to the right by width of the sidebar on desktop */}
-        <div className="lg:pl-72" />
         {/* sidebar for mobile */}
-        <div className="sticky top-0 z-40 mb-1 flex h-14 shrink-0 items-center border-b border-gray-50/90 bg-gray-50 px-6 dark:border-none dark:border-black/10 dark:bg-black/95 sm:px-12 lg:hidden">
-          <Sheet>
+        <Sheet>
+          {/* sidebar for desktop */}
+          <SidebarComponent className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex" />
+
+          {/* move main screen to the right by width of the sidebar on desktop */}
+          <div className="lg:pl-72" />
+          <div className="sticky top-0 z-40 mb-1 flex h-14 shrink-0 items-center border-b border-gray-50/90 bg-gray-50 px-6 dark:border-none dark:border-black/10 dark:bg-black/95 sm:px-12 lg:hidden">
             <SheetTrigger asChild>
               <button
                 type="button"
@@ -38,20 +39,21 @@ export default function Sidebar() {
             >
               <SidebarComponent className="flex" />
             </SheetContent>
-          </Sheet>
-          {/* <div className="flex flex-1 items-center justify-end gap-x-4 self-stretch lg:gap-x-6">
+
+            {/* <div className="flex flex-1 items-center justify-end gap-x-4 self-stretch lg:gap-x-6">
             <ProfileMenu size="small" className="mr-3 mt-1.5" />
           </div> */}
-          <div className="flex flex-1 items-center justify-end gap-x-4 self-stretch lg:gap-x-6">
-            {session && (
-              <div className="flex items-center justify-between space-x-2">
-                <span>{session.email}</span>
-                <SignoutButton />
-              </div>
-            )}
-            {!session && <SigninPageButton />}
+            <div className="flex flex-1 items-center justify-end gap-x-4 self-stretch lg:gap-x-6">
+              {session && (
+                <div className="flex items-center justify-between space-x-2">
+                  <span>{session.email}</span>
+                  <SignoutButton />
+                </div>
+              )}
+              {!session && <SigninPageButton />}
+            </div>
           </div>
-        </div>
+        </Sheet>
       </nav>
     </>
   );
@@ -88,29 +90,31 @@ export const SidebarComponent = ({ className }: { className?: string }) => {
                     ? pathname === "/" || pathname === ""
                     : pathname.startsWith(key);
                 return (
-                  <button
-                    type="button"
-                    key={item.name}
-                    onClick={() => router.push(key)}
-                    disabled={item.auth ? !session : item.disabled}
-                    className={cn(
-                      isCurrent
-                        ? "bg-gray-200 font-semibold text-foreground dark:bg-secondary"
-                        : "duration-200 hover:bg-gray-200 hover:dark:bg-muted",
-                      "relative group flex w-full items-center gap-x-2 rounded-md px-3 py-2 text-sm leading-6 disabled:cursor-default disabled:text-muted-foreground disabled:hover:bg-transparent"
-                    )}
-                  >
-                    <item.icon
-                      className="h-5 w-5 shrink-0"
-                      aria-hidden="true"
-                    />
-                    {item.name}
-                    {item.badge && (
-                      <span className="absolute right-1 inline-flex items-center rounded-md bg-gray-300 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-500/10">
-                        {item.badge}
-                      </span>
-                    )}
-                  </button>
+                  <SheetClose asChild key={item.name}>
+                    <Link
+                      type="button"
+                      // onClick={() => router.push(key)}
+                      prefetch={false}
+                      href={key}
+                      className={cn(
+                        isCurrent
+                          ? "bg-gray-200 font-semibold text-foreground dark:bg-secondary"
+                          : "duration-200 hover:bg-gray-200 hover:dark:bg-muted",
+                        "relative group flex w-full items-center gap-x-2 rounded-md px-3 py-2 text-sm leading-6 disabled:cursor-default disabled:text-muted-foreground disabled:hover:bg-transparent"
+                      )}
+                    >
+                      <item.icon
+                        className="h-5 w-5 shrink-0"
+                        aria-hidden="true"
+                      />
+                      {item.name}
+                      {item.badge && (
+                        <span className="absolute right-1 inline-flex items-center rounded-md bg-gray-300 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-500/10">
+                          {item.badge}
+                        </span>
+                      )}
+                    </Link>
+                  </SheetClose>
                 );
               })}
             </div>
