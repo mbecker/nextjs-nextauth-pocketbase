@@ -8,8 +8,11 @@ import { useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import { SignoutButton, SigninPageButton } from "./auth/SignoutButton";
 import { NAVIGATION_ITEMS } from "@/data/navigation";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { MenuIcon } from "lucide-react";
 
 export default function Sidebar() {
+  const { data: session } = useSession();
   return (
     <>
       <nav>
@@ -20,7 +23,34 @@ export default function Sidebar() {
         <div className="lg:pl-72" />
         {/* sidebar for mobile */}
         <div className="sticky top-0 z-40 mb-1 flex h-14 shrink-0 items-center border-b border-gray-50/90 bg-gray-50 px-6 dark:border-none dark:border-black/10 dark:bg-black/95 sm:px-12 lg:hidden">
-          <MobileSidebarComponent />
+          <Sheet>
+            <SheetTrigger asChild>
+              <button
+                type="button"
+                className="mt-1 p-0.5 text-muted-foreground lg:hidden"
+              >
+                <MenuIcon className="h-6 w-6" aria-hidden="true" />
+              </button>
+            </SheetTrigger>
+            <SheetContent
+              side="left"
+              className="m-0 w-[280px] p-0 sm:w-[300px] lg:hidden"
+            >
+              <SidebarComponent className="flex" />
+            </SheetContent>
+          </Sheet>
+          {/* <div className="flex flex-1 items-center justify-end gap-x-4 self-stretch lg:gap-x-6">
+            <ProfileMenu size="small" className="mr-3 mt-1.5" />
+          </div> */}
+          <div className="flex flex-1 items-center justify-end gap-x-4 self-stretch lg:gap-x-6">
+            {session && (
+              <div className="flex items-center justify-between space-x-2">
+                <span>{session.email}</span>
+                <SignoutButton />
+              </div>
+            )}
+            {!session && <SigninPageButton />}
+          </div>
         </div>
       </nav>
     </>
@@ -96,54 +126,6 @@ export const SidebarComponent = ({ className }: { className?: string }) => {
           {!session && <SigninPageButton />}
         </div>
       </aside>
-    </div>
-  );
-};
-
-export const MobileSidebarComponent = ({
-  className,
-}: {
-  className?: string;
-}) => {
-  const { data: session } = useSession();
-
-  const router = useRouter();
-  const pathname = usePathname();
-
-  return (
-    <div className={cn("flex flex-row space-x-2 w-full", className)}>
-      {Object.entries(NAVIGATION_ITEMS).map(([key, item]) => {
-        const isCurrent =
-          key === "/"
-            ? pathname === "/" || pathname === ""
-            : pathname.startsWith(key);
-        return (
-          <button
-            type="button"
-            key={item.name}
-            onClick={() => router.push(key)}
-            disabled={item.auth ? !session : item.disabled}
-            className={cn(
-              isCurrent
-                ? "bg-gray-200 font-semibold text-foreground dark:bg-secondary"
-                : "duration-200 hover:bg-gray-200 hover:dark:bg-muted",
-              "relative group flex flex-col w-full items-center justify-center gap-x-2 rounded-md px-3 py-2 text-sm leading-6 disabled:cursor-default disabled:text-muted-foreground disabled:hover:bg-transparent"
-            )}
-          >
-            <span>{item.name}</span>
-            {item.badge && <span className="text-xs">{item.badge}</span>}
-          </button>
-        );
-      })}
-      <div className="mb-6 flex flex-col space-y-2 items-center justify-center">
-        {session && (
-          <>
-            <span>{session.email}</span>
-            <SignoutButton />
-          </>
-        )}
-        {!session && <SigninPageButton />}
-      </div>
     </div>
   );
 };
