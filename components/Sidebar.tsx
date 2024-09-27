@@ -61,10 +61,7 @@ export default function Sidebar() {
 
 export const SidebarComponent = ({ className }: { className?: string }) => {
   const { data: session } = useSession();
-
-  const router = useRouter();
   const pathname = usePathname();
-
   return (
     <div>
       <aside
