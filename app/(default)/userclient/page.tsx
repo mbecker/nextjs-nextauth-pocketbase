@@ -5,7 +5,7 @@ import UserInfo from "@/components/userinfo";
 export default function Home() {
   return (
     <>
-      <PageHeader pageName="User Client" subtitle="User Details Client" />
+      <PageHeader title="User Client" subtitle="useSession" className="px-4 pt-4 lg:px-6 lg:pt-6"/>
 
       <PageBody className="flex">
         <UserInfo />

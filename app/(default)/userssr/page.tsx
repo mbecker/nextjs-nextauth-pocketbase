@@ -7,7 +7,7 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
   return (
     <>
-      <PageHeader pageName="User SSR" subtitle="User Details" />
+      <PageHeader title="User SSR" subtitle="getServerSession" className="px-4 pt-4 lg:px-6 lg:pt-6"/>
 
       <PageBody className="flex">
         {session !== null && (

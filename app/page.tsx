@@ -5,12 +5,11 @@ import DefaultLayout from "./(default)/layout";
 export default async function Home() {
   return (
     <DefaultLayout>
-      <PageHeader pageName="Home" subtitle="Nextjs NextAuth Pocketbase" />
+      <PageHeader title="Home" subtitle="Standard page" className="px-4 pt-4 lg:px-6 lg:pt-6" />
 
       <PageBody>
         <p className="mt-6 text-lg leading-8">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores
-          impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis.
+          Nextjs app with nextauh and pocketbase.
         </p>
       </PageBody>
     </DefaultLayout>
