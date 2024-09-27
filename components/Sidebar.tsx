@@ -24,7 +24,7 @@ export default function Sidebar() {
 
           {/* move main screen to the right by width of the sidebar on desktop */}
           <div className="lg:pl-72" />
-          <div className="sticky top-0 z-40 mb-1 flex h-14 shrink-0 items-center border-b border-gray-50/90 bg-gray-50 px-6 dark:border-none dark:border-black/10 dark:bg-black/95 sm:px-12 lg:hidden">
+          <div className="fixed top-0 left-0 right-0 z-40 mb-1 flex h-14 shrink-0 items-center border-b border-gray-50/90 bg-gray-50 px-6 dark:border-none dark:border-black/10 dark:bg-black/95 sm:px-12 lg:hidden">
             <SheetTrigger asChild>
               <button
                 type="button"
@@ -53,6 +53,8 @@ export default function Sidebar() {
               {!session && <SigninPageButton />}
             </div>
           </div>
+          {/* move main screen to the bottom by height of the mobile nav */}
+          <div className="pt-14 lg:hidden" />
         </Sheet>
       </nav>
     </>
