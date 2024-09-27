@@ -1,4 +1,18 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+
+/* ---
+Allow basically all domains / hotsnames for the oauth avatar urls
+*/
+
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*",
+      },
+    ],
+  },
+};
 
 export default nextConfig;

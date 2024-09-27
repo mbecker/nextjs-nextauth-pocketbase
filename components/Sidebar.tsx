@@ -11,6 +11,7 @@ import { NAVIGATION_ITEMS } from "@/data/navigation";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./ui/sheet";
 import { MenuIcon } from "lucide-react";
 import Link from "next/link";
+import ProfileMenu from "./ProfileMenu";
 
 export default function Sidebar() {
   const { data: session } = useSession();
@@ -44,12 +45,7 @@ export default function Sidebar() {
             <ProfileMenu size="small" className="mr-3 mt-1.5" />
           </div> */}
             <div className="flex flex-1 items-center justify-end gap-x-4 self-stretch lg:gap-x-6">
-              {session && (
-                <div className="flex items-center justify-between space-x-2">
-                  <span>{session.email}</span>
-                  <SignoutButton />
-                </div>
-              )}
+              {session && <ProfileMenu size="small" className="mr-3 mt-1.5" />}
               {!session && <SigninPageButton />}
             </div>
           </div>
@@ -68,7 +64,7 @@ export const SidebarComponent = ({ className }: { className?: string }) => {
     <div>
       <aside
         className={cn(
-          "h-dvh w-full flex-shrink-0 flex-col justify-between gap-y-6 bg-gray-50 px-4 pt-4 dark:bg-black lg:w-72 lg:px-6 lg:pt-6",
+          "h-dvh w-full flex-shrink-0 flex-col justify-between gap-y-6 bg-gray-50 px-4 pt-4 dark:bg-black lg:w-72 lg:px-4 lg:pt-6",
           className
         )}
       >
@@ -121,10 +117,9 @@ export const SidebarComponent = ({ className }: { className?: string }) => {
         </ScrollArea>
         <div className="mb-6 flex flex-col space-y-2 items-center justify-center">
           {session && (
-            <>
-              <span>{session.email}</span>
-              <SignoutButton />
-            </>
+            <div className="hidden w-full lg:block">
+            <ProfileMenu size="large" />
+          </div>
           )}
           {!session && <SigninPageButton />}
         </div>

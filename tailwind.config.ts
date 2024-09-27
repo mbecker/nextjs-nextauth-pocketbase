@@ -55,7 +55,11 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+		// The 3.5rem is the height of the mobile header and the corresponding padding top for the main body
+		height: {
+			'mobile-dvh' : 'calc(100dvh - 3.5rem)'
+		}
   	}
   },
   plugins: [require("tailwindcss-animate")],
