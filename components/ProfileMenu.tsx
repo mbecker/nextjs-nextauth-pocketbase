@@ -21,7 +21,7 @@ type ProfileMenuProps = {
   size: "large" | "small";
 };
 
-const ProfileMenu = ({ className, size }: ProfileMenuProps) => {
+const ProfileMenu = ({ size }: ProfileMenuProps) => {
   const { data: session, status } = useSession();
 
   const isSize = size === "large";
