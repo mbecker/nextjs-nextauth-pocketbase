@@ -1,12 +1,11 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
-import { SignoutButton, SigninPageButton } from "./auth/SignoutButton";
+import { SigninPageButton } from "./auth/SignoutButton";
 import { NAVIGATION_ITEMS } from "@/data/navigation";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./ui/sheet";
 import { MenuIcon } from "lucide-react";
