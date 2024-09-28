@@ -28,7 +28,7 @@ Please submit issues and / or PRs to improve this project. Thanks!
 
 - [ ] Update README withe more detailed instructions
 - [ ] Add inline comments
-- [ ] Delete authprovider cookie after signin process
+- [x] Delete authprovider cookie after signin process
 - [ ] Add credentials signin
 - [ ] Add signup process
 - [ ] Redirect after signin to the previous page

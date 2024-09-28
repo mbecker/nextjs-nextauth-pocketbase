@@ -47,6 +47,8 @@ const pocketbaseAuthConfig: OAuthConfig<PocketBaseProfile> = {
           throw new Error(tokens.error);
         }
         const authProvider: AuthProviderInfo = JSON.parse(cookie.value);
+        // Delete cookie
+        cookies().delete(process.env.POCKETBASE_COOKIE_NAME);
 
         // authenticate at pocketbase with the provider and the oauth code (response)
         const userModelResponse = await pocketbase
@@ -71,6 +73,7 @@ const pocketbaseAuthConfig: OAuthConfig<PocketBaseProfile> = {
   userinfo: {
     // (2) userinfo request is called after the token request
     request(context) {
+      // extend the `token`
       const tokens: PocketBaseTokenSetParameters =
         context.tokens as PocketBaseTokenSetParameters;
 
