@@ -44,6 +44,11 @@ export default function DefaultPage() {
 
       <PageBody>
         <div className="space-y-4">
+          <ul className="space-y-4">
+            {[...Array(100).keys()].map((x) => (
+              <TableItem key={x} />
+            ))}
+          </ul>
           <ul className="space-y-4">{items}</ul>
         </div>
       </PageBody>
