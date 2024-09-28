@@ -9,6 +9,7 @@ Sign in page server side rendering
 
 import AuthLink from "@/components/auth/AuthLink";
 import { pocketbase, redirectURI } from "@/lib/pocketbasessr";
+import Link from "next/link";
 import type { AuthProviderInfo } from "pocketbase";
 
 export default async function SigninPage({
@@ -37,8 +38,12 @@ export default async function SigninPage({
     errorMessage = searchParams.error as string;
   }
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+    <div className="flex flex-col gap-12 items-center justify-center min-h-dvh w-full font-[family-name:var(--font-geist-sans)]">
+      
+      
+      <h2 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl justify-center">
+          Sign in
+        </h2>
         <div className="flex gap-4 items-center flex-col">
           {authMethods.map((a) => (
             <AuthLink key={a.name} redirectURI={redirectURI} authProvider={a} />
@@ -56,7 +61,8 @@ export default async function SigninPage({
             <span className="text-pink-400">{errorMessage}</span>
           </div>
         )}
-      </main>
+        <div className="flex items-center"><Link href="/" prefetch={false} className="font-semibold text-gray-600 hover:text-gray-800">Back</Link></div>
+
     </div>
   );
 }
