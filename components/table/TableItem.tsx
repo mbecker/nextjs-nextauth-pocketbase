@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function TableItem() {
   return (
     <div className="group/row relative flex items-center justify-between rounded-lg border-0 bg-white p-3 ring-1 ring-gray-200 transition-all hover:bg-secondary hover:ring-gray-300 dark:bg-secondary dark:ring-gray-700 hover:dark:ring-gray-500 sm:p-4">
@@ -47,13 +49,14 @@ export default function TableItem() {
         <div className="flex-col">
           <div className="flex items-center">
             <h2 className="min-w-0 max-w-[150px] truncate text-sm font-semibold leading-6 text-foreground sm:max-w-md">
-              <a
+              <Link
                 className="w-full truncate"
-                href="/documents/cm1c3xcyk000e666gqa4gqfbu"
+                href="/"
+                prefetch={false}
               >
                 <span>test.pdf</span>
                 <span className="absolute inset-0" />
-              </a>
+              </Link>
             </h2>
           </div>
           <div className="mt-1 flex items-center space-x-1 text-xs leading-5 text-muted-foreground">
@@ -64,9 +67,10 @@ export default function TableItem() {
         </div>
       </div>
       <div className="flex flex-row space-x-2">
-        <a
+        <Link
           className="z-20 flex items-center space-x-1 rounded-md bg-gray-200 px-1.5 py-0.5 transition-all duration-75 hover:scale-105 active:scale-100 dark:bg-gray-700 sm:px-2"
-          href="/documents/cm1c3xcyk000e666gqa4gqfbu"
+          href="/"
+          prefetch={false}
         >
           <svg
             width={14}
@@ -87,7 +91,7 @@ export default function TableItem() {
           <p className="whitespace-nowrap text-xs text-muted-foreground sm:text-sm">
             2<span className="ml-1 hidden sm:inline-block">views</span>
           </p>
-        </a>
+        </Link>
         <button
           className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border hover:text-accent-foreground transition-colors z-20 h-8 w-8 border-gray-200 bg-transparent p-0 hover:bg-gray-200 dark:border-gray-700 hover:dark:bg-gray-700 lg:h-9 lg:w-9"
           type="button"
