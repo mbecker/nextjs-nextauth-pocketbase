@@ -16,7 +16,7 @@ export default function PageHeader({
   return (
     <section
       className={cn(
-        "mb-4 flex items-center justify-between md:mb-8 lg:mb-12",
+        "mb-0 flex items-center justify-between",
         className
       )}
     >
@@ -24,7 +24,7 @@ export default function PageHeader({
         <h2 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
           {title}
         </h2>
-        <p className="text-base text-muted-foreground sm:text-sm">{subtitle}</p>
+        <p className="hidden lg:flex text-base text-muted-foreground sm:text-sm">{subtitle}</p>
       </div>
       {children && children}
     </section>
